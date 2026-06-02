@@ -1,0 +1,872 @@
+html{
+    background-color: white;
+}
+
+body{
+    margin: 0;
+    width: 100dvw;
+    height: 100dvh;
+    user-select: none;
+    color: black;
+    overflow: hidden;
+    font-family: montserrat, 'Times New Roman', Times, serif;
+}
+
+input{
+    border: 0;
+    background-color: transparent;
+    font-family: montserrat, 'Times New Roman', Times, serif;
+}
+
+button{
+    font-family: montserrat, 'Times New Roman', Times, serif;
+    border: 0;
+    padding: 5px;
+    color: black;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+@font-face {
+    font-family: 'montserrat';
+    src: url('./font/Montserrat-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'montserratBold';
+    src: url('./font/Montserrat-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'roboto';
+    src: url('./font/RobotoSlab-Regular.ttf');
+}
+
+.allDisplay{
+    margin: 0;
+    width: 100dvw;
+    height: 100dvh;
+    user-select: none;
+    color: black;
+    overflow: hidden;
+    font-family: montserrat, 'Times New Roman', Times, serif;
+}
+
+.headersDisplay{
+    background-color: #204388a8;
+    width: 100%;
+    height: 35dvh;
+    box-sizing: border-box;
+    padding: 50px;
+    color: white;
+}
+
+.greetingUser{
+    font-weight: bold;
+    width: 70%;
+    margin-bottom: 20px;
+    font-size: 1.15rem;
+    margin-inline: auto;
+}
+
+.actionPopup{
+    position: absolute;
+    background-color: rgb(231, 231, 231);
+    border-radius: 5px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.192);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-20%, 70%);
+    z-index: 3;
+}
+
+.actionPopup button{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 15px;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+}
+
+.actionPopup button:not(:last-child){
+    border-bottom: 1px solid rgba(128, 128, 128, 0.79);
+}
+
+.currentBalanceDisplay{
+    position: relative;
+    background-color: white;
+    border-radius: 20px;
+    width: 70%;
+    height: 195px;
+    color: #204388a8;
+    padding: 20px;
+    margin-inline: auto;
+    display: flex;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.balanceDetailDisplay{
+    width: 60%;
+}
+
+.balanceTitleDisplay, .balanceDisplay{
+    width: 100%;
+    display: flex;
+}
+
+.previousBalance div{
+    margin-left: 5px;
+    font-style: italic;
+}
+
+.previousBalance{
+    width: 85%;
+}
+
+.currentBalance{
+    padding: 15px;
+}
+
+.balanceCurrency{
+    font-size: 1.1rem;
+    width: 25px;
+    font-family: 'montserratBold';
+}
+
+.balance{
+    font-size: 2.25rem;
+    margin-left: 10px;
+    font-weight: bold;
+    font-family: 'montserratBold';
+}
+
+.balanceChange{
+    margin-left: 30px;
+    font-weight: bold;
+}
+
+.transactionDetailDisplay{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.transactionDetail div{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.expenseDisplay, .profitDisplay{
+    display: flex;
+    font-weight: bold;
+}
+
+.todayExpense{
+    margin-top: 30px;
+    border-left: 5px solid rgba(223, 14, 14, 0.817);
+    padding-left: 20px;
+}
+
+.todayProfit{
+    border-left: 5px solid rgba(19, 180, 19, 0.712);
+    padding-left: 20px;
+}
+
+.balanceCurrencyToday{
+    margin-right: 5px;
+}
+
+.profitTitle{
+    margin-bottom: 2.5px;
+}
+
+.transactionDisplay{
+    width: 100%;
+    height: 65dvh;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 35px;
+    overflow: scroll;
+    box-sizing: border-box;
+}
+
+.transactionDisplay .transactionAction:first-child{
+    margin-top: 50px;
+}
+
+.transactionFee{
+    font-size: 1rem;
+}
+
+.transactionAction{
+    width: 65%;
+    height: 140px;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0, 0, 0, 0.393);
+    display: flex;
+    overflow: hidden;
+}
+
+.transactionImage{
+    height: 50px;
+}
+
+.transactionImageDiv{
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transactionDetail{
+    height: 100%;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    justify-content: center;
+}
+
+.editPreviousBalance{
+    margin-left: auto;
+    position: relative;
+    border: 2px solid #204388a8;
+    border-radius: 15px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+}
+
+.editPreviousBalance:hover{
+    cursor: pointer;
+    background-color: #20438846;
+}
+
+.transactionNominal{
+    font-size: 1.05rem;
+    margin-bottom: 5px;
+}
+
+.transactionUsername{
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.transactionDate{
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: rgba(81, 80, 80, 0.854);
+}
+
+.transactionTypeDetail{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    flex-direction: column;
+    width: 50%;
+}
+
+.mainTransactionDiv{
+    display: flex;
+    width: 45%;
+}
+
+.transactionBank{
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.transactionAccount{
+    margin-top: 3px;
+    font-size: 0.85rem;
+}
+
+.changeDetail{
+    margin-left: auto;
+    border: 2px solid rgba(81, 80, 80, 0.854);
+    height: 35px;
+    border-radius: 15px;
+    width: 100px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+    font-size: 0.875rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.changeTransactionAction{
+    box-sizing: border-box;
+    height: 100%;
+    width: 55%;
+    display: flex;
+}
+
+.changeDetail:hover{
+    opacity: 0.8;
+    background-color: #c5c5c55d;
+    cursor: pointer;
+}
+
+.addTransaction{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    bottom: 50px;
+    right: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    background-color: #3b578f;
+}
+
+.addTransaction:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.addTransactionImage{
+    height: 17px;
+    filter: invert(1);
+}
+
+.transactionPopup{
+    position: relative;
+    width: 30%;
+    height: 75%;
+    background-color: rgb(231, 231, 231);
+    border-radius: 20px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.192);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.changeInitialPopup{
+    position: relative;
+    width: 30%;
+    height: 25%;
+    background-color: rgb(231, 231, 231);
+    border-radius: 20px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.192);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.changeInitialPopup input{
+    width: 85%;
+}
+
+.transactionPopupDetail, .changeInitialPopupDetail, .editPopupDetail{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.215);
+}
+
+.editPopupDetail{
+    background-color: transparent;
+}
+
+.transactionHeader, .changeInitialTitle{
+    width: 100%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.transactionInput{
+    width: 100%;
+    height: 30px;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.inputTransaction{
+    display: flex;
+    flex-direction: column;
+    width: 72%;
+    box-sizing: border-box;
+    height: fit-content;
+    margin-bottom: 20px;
+}
+
+.inputLabel{
+    margin-bottom: 3px;
+    font-size: 0.85rem;
+    width: fit-content;
+}
+
+.transactionTypeDiv{
+    display: flex;
+    width: 75%;
+    justify-content: center;
+    margin-top: 0px;
+}
+
+.transactionTypeCurrent{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.594);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.transactionTypeCurrent:hover{
+    cursor: pointer;
+    opacity: 0.9;
+    background-color: #8585856d;
+}
+
+.bankBrand{
+    width: 40%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-family: montserrat;
+    cursor: pointer;
+}
+
+.arrowSign{
+    height: 100%;
+    font-size: 2rem;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bankBrandDisplay{
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.transactionTypeCurrent.selectedType{
+    background-color: rgba(123, 181, 215, 0.566);
+}
+
+.optionBank{
+    font-family: montserrat, 'Times New Roman', Times, serif;
+}
+
+.optionBank:hover{
+    cursor: pointer;
+}
+
+.buttonAction{
+    margin-top: 40px;
+    width: 80%;
+}
+
+.changeInitialPopup .buttonAction{
+    margin-top: 20px;
+}
+
+.buttonAction button{
+    padding: 10px 20px;
+    border-radius: 20px;
+    width: 120px;
+    border: 1px solid rgba(128, 128, 128, 0.79);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.buttonAction button:hover:not(.saveTransaction){
+    cursor: pointer;
+    background-color: #89898976;
+}
+
+.saveTransaction{
+    background-color: rgba(59, 202, 128, 0.616);
+}
+
+.saveTransaction:hover{
+    background-color: rgba(42, 171, 104, 0.733);
+    cursor: pointer;
+}
+
+.deleteTransactionImage{
+    height: 25px;
+}
+
+.deleteTransactionImage:hover{
+    cursor: pointer;
+    filter: invert(0.3);
+}
+
+.deleteTransaction{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.transactionDetailDiv{
+    width: 100%;
+}
+
+.exportAction{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.exportAction button{
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    width: 120px;
+    border: 1px solid rgba(128, 128, 128, 0.79);
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.exportAction button:hover{
+    cursor: pointer;
+    background-color: #89898976;
+}
+
+.editTransactionActionImage{
+    width: 25px;
+}
+
+.editTransactionAction{
+    transform: translateX(100%) translateY(70%);
+}
+
+@media (max-width: 900px){
+    .headersDisplay{
+        padding: 15px;
+        padding-top: 50px;
+    }
+
+    .greetingUser{
+        width: 90%;
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+
+    .currentBalanceDisplay{
+        padding: 10px;
+        padding-top: 15px;
+        width: 95%;
+        flex-direction: column;
+        height: 245px;
+    }
+    
+    .previousBalance{
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .balance{
+        font-size: 1.75rem;
+    }
+
+    .balanceDetailDisplay{
+        width: 100%;
+    }
+
+    .balanceTitleDisplay, .balanceDisplay{
+        width: 100%;
+    }
+
+    .balanceChange{
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+
+    .transactionDetailDisplay{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.7rem;
+    }
+
+    .transactionDetailDiv div{
+        align-items: start;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .transactionFee{
+        font-size: 0.85rem;
+    }
+
+    .transactionDetailDiv{
+        display: flex;
+    }
+
+    .exportAction{
+        width: 100%;
+    }
+
+    .exportAction button{
+        width: 100px;
+        font-size: 0.65rem;
+        margin-top: 5px;
+    }
+
+    .exportAction button:hover{
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .todayExpense{
+        margin-top: 0;
+        border-left: 5px solid rgba(223, 14, 14, 0.817);
+    }
+
+    .todayExpense, .todayProfit{
+        padding-left: 10px;
+        width: fit-content;
+        max-width: 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .expenseDisplay, .profitDisplay{
+        font-size: 0.8rem;
+    }
+
+    .transactionDisplay{
+        padding: 10px;
+    }
+
+    .transactionAction{
+        width: 85%;
+        height: 140px;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: 10px;
+    }
+
+    .mainTransactionDiv{
+        width: 65%;
+    }
+
+    .transactionImage{
+        height: 35px;
+    }
+
+    .transactionTypeDetail{
+        margin-top: 10px;
+        height: 30px;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .transactionImageDiv{
+        margin-top: 15px;
+        align-items: start;
+        justify-content: start;
+        margin-right: 3px;
+        width: 10%;
+    }
+
+    .deleteTransaction{
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }    
+
+    .transactionDetail{
+        height: 100%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        justify-content: center;
+    }
+
+    .transactionDetail div{
+        width: 100%;
+    }
+
+    .transactionNominal{
+        font-size: 0.9rem;
+    }
+
+    .transactionUsername{
+        font-size: 0.9rem;
+    }
+
+    .transactionDate{
+        font-size: 0.7rem;
+    }
+
+    .transactionBank{
+        margin-bottom: 5px;
+        font-size: 0.7rem;
+    }
+
+    .changeTransactionAction{
+        width: 35%;
+        display: flex;
+        margin-top: 20px;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .transactionAccount{
+        font-size: 0.8rem;
+    }
+
+    .changeDetail{
+        height: 25px;
+        width: 90%;
+        font-size: 0.7rem;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .transactionDisplay .transactionAction:first-child{
+        margin-top: 90px;
+    }
+
+    .addTransaction{
+        bottom: 30px;
+        right: 30px;
+    }
+
+    .transactionPopup{
+        width: 70%;
+        height: 65%;
+    }
+
+    .changeInitialPopup{
+        width: 70%;
+        height: 22.5%;
+    }
+
+    .inputTransaction{
+        width: 85%;
+    }
+
+    .transactionTypeCurrent{
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 0.8rem;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+
+    .editPreviousBalance{
+        margin-left: auto;
+        position: relative;
+        border: 1px solid #204388a8;
+        border-radius: 10px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 55px;
+        margin-right: 25px;
+        font-size: 0.6rem;
+    }
+
+    .bankBrand{
+        font-size: 0.7rem;
+        width: 42%;
+        padding: 0px 10px;
+    }
+
+    .arrowSign{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .buttonAction{
+        display: flex;
+        margin-top: 40px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .buttonAction button{
+        padding: 8px 12px;
+        border-radius: 20px;
+        width: 110px;
+        border: 1px solid rgba(128, 128, 128, 0.79);
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    
+    .buttonAction button:hover:not(.saveTransaction){
+        cursor: pointer;
+        background-color: #89898976;
+    }    
+}

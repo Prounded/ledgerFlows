@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ledger Flows</title>
+
+    <link rel="icon" href="./image/logoIcon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="allDisplay">
+        <div class="headersDisplay">
+            <div class="greetingUser">Selamat Datang Kembali!</div>
+    
+            <div class="currentBalanceDisplay">
+                
+                <div class="balanceDetailDisplay">
+                    <div class="previousBalance">
+                        <div class="balanceTitleDisplay">
+                            <div class="balanceTitle">Saldo Awal</div>
+                            <div class="balanceDate"></div>
+                            <button class="editPreviousBalance">Edit</button>
+                        </div>
+        
+                        <div class="balanceDisplay">
+                            <div class="balanceCurrencyPrevious">Rp</div>
+                            <div class="balanceValue">0</div>
+                        </div>
+                    </div>
+        
+                    <div class="currentBalance">
+                        <div class="balanceDisplay">
+                            <div class="balanceCurrency">Rp</div>
+                            <div class="balance">0</div>
+                        </div>
+                        
+                        <div class="balanceChange">-</div>
+                    </div>
+                </div>
+    
+                <div class="transactionDetailDisplay">
+                    <div class="transactionDetailDiv">
+                        <div class="todayProfit">
+                            <div class="profitTitle">Pemasukan Hari Ini</div>
+                            <div class="profitDisplay">
+                                <div class="balanceCurrencyToday">Rp</div>
+                                <div class="balanceProfit"></div>
+                            </div>
+                        </div>
+        
+                        <div class="todayExpense">
+                            <div class="profitTitle">Pengeluaran Hari Ini</div>
+                            <div class="expenseDisplay">
+                                <div class="balanceCurrencyToday">Rp</div>
+                                <div class="balanceExpense"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="exportAction">
+                        <button class="exportButton" title="Ekspor Data">
+                            Upload
+                        </button>
+
+                        <button class="openLinkButton" title="Buka Link Google Sheets">
+                            Buka Laporan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="transactionDisplay"></div>
+    
+        <button class="addTransaction" title="Tambah Transaksi">
+            <img src="./image/plusButtonImage.png" class="addTransactionImage">
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="./display/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
