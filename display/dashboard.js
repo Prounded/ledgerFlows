@@ -13,7 +13,6 @@ function load() {
     }
 
     window.addEventListener('resize', () => {
-        console.log('resized');
         if (window.innerWidth > 900 && document.querySelector('.allDisplay').getAttribute('design') === 'mobileUI') { 
             window.location.reload();
         }
@@ -87,7 +86,6 @@ function exportData() {
 	}).then(async (result) => {
 		const dataSaved = JSON.parse(localStorage.getItem('transactionData'));
 
-        console.log(dataSaved);
 		const fetching = await fetch(GOOGLE_SHEET_EXE, {
 			method: 'POST',
 			mode: 'no-cors',
@@ -188,12 +186,6 @@ function addPopup() {
     document.querySelector('.allDisplay').insertAdjacentHTML('beforeend', POPUP_CHANGE_TRANSACTION);
 
     const transactionTypeCurrent = document.querySelectorAll('.transactionTypeCurrent');
-	for (let i = 0; i < transactionTypeCurrent.length; i++) {
-        transactionTypeCurrent[i].addEventListener('click', () => {
-            changeTransactionType();
-            saveInputUser()
-        });
-    }
     
     document.querySelector('.cancelTransaction').addEventListener('click', closePopup);
     document.querySelector('.saveTransaction').addEventListener('click', () => {
@@ -202,7 +194,7 @@ function addPopup() {
 
     document.querySelector('.transactionPopupDetail').addEventListener('click', () => {
         if (event.target.classList.contains('transactionPopupDetail')) {
-            closePopup()
+            closePopup();
         }
     });
     
@@ -210,46 +202,61 @@ function addPopup() {
 
     const transactionAction = document.querySelectorAll('.transactionAction');
 
-    createBankBrand();
-
     let newID = Number(TRANSACTION_ID_START);
-    if (event.target.classList.contains('changeDetail')) {
-        const transactionAction = event.target.closest('.transactionAction');
-        newID = Number(transactionAction.getAttribute('data-id'));
-        let dataPrevious = {};
-        dataPrevious.username = transactionAction.querySelector('.transactionUsername').textContent;
+    if (event.target.classList.contains('changeDetail') || event.target.classList.contains('editTransactionButton')) {
+        createBankBrand(false);
 
-        const transactionNominal = transactionAction.querySelector('.transactionNominal').textContent;
-        dataPrevious.balance = Number(transactionNominal.replaceAll('Rp ', '').replaceAll('.', '').replaceAll('-', ''));
-        
-        const transactionAccount = transactionAction.querySelector('.transactionAccount').textContent;
-        if (transactionAccount !== '-') {
-            dataPrevious.account = transactionAccount;
-        }
+		const transactionAction = event.target.closest('.transactionAction') ?? event.target.closest('.editPopupDetail');
+		newID = Number(transactionAction.getAttribute('data-id'));
+		let dataPrevious = {};
+		dataPrevious.username = transactionAction.querySelector('.transactionUsername').textContent;
 
-        if (transactionNominal.includes('-')) {
-            dataPrevious.type = 'expense';
-        }
-        else {
-            dataPrevious.type = 'income';
-        }
+		const transactionNominal = transactionAction.querySelector('.transactionNominal').textContent;
+		dataPrevious.balance = Number(transactionNominal.replaceAll('Rp ', '').replaceAll('.', '').replaceAll('-', ''));
 
-        const transactionBank = transactionAction.querySelector('.transactionBank').textContent.split('→');
-
-        dataPrevious.originalBank = transactionBank[0].trim();
-        dataPrevious.targetBank = transactionBank[1].trim();
-
-        preInputData(dataPrevious);
-    }
-    else if (transactionAction.length > 0) {
-        for (let i = 0; i < transactionInput.length; i++) {
-			transactionInput[i].addEventListener('input', saveInputUser);
+		const transactionAccount = transactionAction.querySelector('.transactionAccount').textContent;
+		if (transactionAccount !== '-') {
+			dataPrevious.account = transactionAccount;
 		}
-        newID = Number(transactionAction[transactionAction.length - 1].getAttribute('data-id')) + 1;
-        preInputData(JSON.parse(localStorage.getItem('savedInput')));
-    }
-    else {
-        preInputData(JSON.parse(localStorage.getItem('savedInput')));
+
+		if (transactionNominal.includes('-')) {
+			dataPrevious.type = 'expense';
+		} else {
+			dataPrevious.type = 'income';
+		}
+
+		const transactionBank = transactionAction.querySelector('.transactionBank').textContent.split('→');
+
+		dataPrevious.originalBank = transactionBank[0].trim();
+		dataPrevious.targetBank = transactionBank[1].trim();
+
+        for (let i = 0; i < transactionTypeCurrent.length; i++) {
+			transactionTypeCurrent[i].addEventListener('click', () => {
+				changeTransactionType();
+			});
+        }
+        
+		preInputData(dataPrevious);
+	} else{
+        createBankBrand(true);
+
+		for (let i = 0; i < transactionInput.length; i++) {
+			transactionInput[i].addEventListener('input', saveInputUser);
+        }
+
+        for (let i = 0; i < transactionTypeCurrent.length; i++) {
+			transactionTypeCurrent[i].addEventListener('click', () => {
+				changeTransactionType();
+				saveInputUser();
+			});
+		}
+
+
+        if (transactionAction.length > 0) {
+            newID = Number(transactionAction[transactionAction.length - 1].getAttribute('data-id')) + 1;
+        }
+
+		preInputData(JSON.parse(localStorage.getItem('savedInput')));
     }
 
     document.querySelector('.transactionPopupDetail').setAttribute('data-ID', newID);
@@ -346,8 +353,11 @@ function saveDataPopup(action) {
             createNewData.targetBank = targetBank;
 
             createNewData.fee = 0;
-            if(createNewData.originalBank !== createNewData.targetBank) {
+            if(createNewData.originalBank !== createNewData.targetBank && createNewData.type === 'expense') {
                 createNewData.fee = BANK_BRAND[createNewData.originalBank];
+            }
+            else {
+                createNewData.fee = 0;
             }
             
             const currentDate = new Date();
@@ -371,8 +381,7 @@ function saveDataPopup(action) {
             transactionData[newID] = createNewData;
 
             localStorage.setItem('transactionData', JSON.stringify(transactionData));
-            console.log(transactionData);
-            
+
             for (let i = 0; i < transactionAction.length; i++) { 
                 if (transactionAction[i].getAttribute('data-id') === String(newID)) {
                     const editedTransaction = transactionAction[i];
@@ -453,7 +462,7 @@ function saveDataPopup(action) {
     closePopup();
 }
 
-function createBankBrand() {
+function createBankBrand(addSave) {
     const bankBrand = document.querySelectorAll('.bankBrand');
     const bankOptions = Object.keys(BANK_BRAND);
     for (let i = 0; i < bankOptions.length; i++) {
@@ -466,8 +475,10 @@ function createBankBrand() {
 		}
 	}
     
-    for (let i = 0; i < bankBrand.length; i++){
-        bankBrand[i].addEventListener('change', saveInputUser);
+    if (addSave) { 
+        for (let i = 0; i < bankBrand.length; i++) {
+			bankBrand[i].addEventListener('change', saveInputUser);
+		}
     }
 }
 
@@ -485,9 +496,11 @@ function changeTransactionType() {
 
 function addEditMobilePopup(event) { 
     const changeTransactionAction = event.target.closest('.changeTransactionAction');
-    const transactionID = changeTransactionAction.getAttribute('data-ID');
+    const transactionAction = event.target.closest('.transactionAction');
+    const transactionID = transactionAction.getAttribute('data-ID');
 
     const editPopupDetail = document.createElement('div');
+    editPopupDetail.setAttribute('data-ID', transactionID);
     editPopupDetail.classList.add('editPopupDetail');
     editPopupDetail.addEventListener('click', (event) => {
         if (event.target.classList.contains('editPopupDetail')) {
@@ -506,9 +519,9 @@ function addEditMobilePopup(event) {
     });
 
     changeTransactionAction.querySelector('.editTransactionButton').addEventListener('click', (event) => {
-        document.querySelector('.allDisplay').removeChild(document.querySelector('.editPopupDetail'));
-		changeTransactionAction.removeChild(document.querySelector('.actionPopup'));
         addPopup(event);
+        changeTransactionAction.removeChild(document.querySelector('.actionPopup'));
+        document.querySelector('.allDisplay').removeChild(document.querySelector('.editPopupDetail'));
     });
 }
 
@@ -525,9 +538,9 @@ function createNewTransactionDisplay(data) {
 		});
 	} else {
         transactionAction.innerHTML = TRANSACTION_HTML_MOBILE;
-        transactionAction.querySelector('.editTransactionAction').addEventListener('click', (event) => {
-            addEditMobilePopup(event);
-        });
+        transactionAction.querySelector('.editTransactionActionImage').addEventListener('click', (event) => {
+			addEditMobilePopup(event);
+		});
 	}
     transactionAction.querySelector('.transactionUsername').textContent = data.username.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     if (data.type === 'expense') {
@@ -591,13 +604,13 @@ function calculateAll() {
         const currentTransactionData = Object.values(transactionData)[i];
         const currentType = currentTransactionData.type;
         const currentFee = currentTransactionData.fee ?? 0;
-        totalFee += currentFee;
         
         if (currentType === 'income') {
-            totalIncome += currentTransactionData.nominal - currentFee;
+            totalIncome += currentTransactionData.nominal;
         }
         else if (currentType === 'expense') {
             totalExpense += currentTransactionData.nominal + currentFee;
+            totalFee += currentFee;
         }
     }
 
