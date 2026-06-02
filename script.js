@@ -15,7 +15,7 @@ const BANK_BRAND = {
 const TRANSACTION_ID_START = 10000;
 const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1UXMsfldDAF9SeBHXVZ5UgJtJ96gl7kRxHCknZ11j7Mc/edit?usp=sharing';
 const GOOGLE_SHEET_EXE =
-	'https://script.google.com/macros/s/AKfycby3UpQOLkNAf2vGK2gRO79d9GwsxFdCocQEPjX1ANhMYUSQZJ7k0-h4fBbtaDycLLnW3w/exec';
+	'https://script.google.com/macros/s/AKfycbxxrWQXdXR-xBvXwHH_lBgoghmnVqP0SOPMqulnRHcT5Oyx9HzljochDD7ywy4UOM9WTw/exec';
 
 const POPUP_CHANGE_TRANSACTION = `        
 <div class="transactionPopupDetail">
