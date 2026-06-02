@@ -38,10 +38,13 @@ function load() {
     });
 
     const newTransactionData = JSON.parse(localStorage.getItem('transactionData'));
+
+    let changedInitialBalance = 0;
     for (let i = 0; i < Object.keys(transactionData).length; i++) {
 		const currentData = Object.values(transactionData)[i];
 
-		if (currentData.date !== todayDay) {
+        if (currentData.date !== todayDay) {
+            changedInitialBalance += currentData.type === 'income' ? currentData.nominal : -currentData.nominal - currentData.fee;
 			delete newTransactionData[currentData.ID];
 			localStorage.setItem('transactionData', JSON.stringify(newTransactionData));
         }
@@ -65,7 +68,11 @@ function load() {
         document.querySelector('.buttonAction').removeChild(document.querySelector('.cancelTransaction'));
     }
     else {
-        document.querySelector('.balanceValue').textContent = Number(initialBalance).toLocaleString('id-ID');
+        if(changedInitialBalance !== 0) {
+            localStorage.setItem('initialBalance', Number(initialBalance) + changedInitialBalance);
+        }
+        
+        document.querySelector('.balanceValue').textContent = (Number(initialBalance) + changedInitialBalance).toLocaleString('id-ID');
     }
 
     calculateAll();
@@ -84,7 +91,10 @@ function exportData() {
 		scrollbarPadding: false,
 		heightAuto: false,
 	}).then(async (result) => {
-		const dataSaved = JSON.parse(localStorage.getItem('transactionData'));
+        const dataSaved = JSON.parse(localStorage.getItem('transactionData'));
+        const initialBalance = Number(localStorage.getItem('initialBalance'));
+
+        const currentBalance = initialBalance + Number(localStorage.getItem('totalIncome')) - Number(localStorage.getItem('totalExpense'));
 
 		const fetching = await fetch(GOOGLE_SHEET_EXE, {
 			method: 'POST',
@@ -93,12 +103,14 @@ function exportData() {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-            body: JSON.stringify(
-                dataSaved,
+            body: JSON.stringify({
+                'initialBalance': initialBalance,
+                'currentBalance': currentBalance,
+                'data': dataSaved,
+            }
 			),
 		});
 
-        console.log(fetching);
 		if (fetching) {
 			Swal.fire({
 				position: 'center',
@@ -641,4 +653,4 @@ function calculateAll() {
     document.querySelector('.balance').textContent = currentBalance.toLocaleString('id-ID');
 }
 
-load()
+load();
