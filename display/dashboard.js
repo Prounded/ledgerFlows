@@ -1,5 +1,3 @@
-//ADA OPSI RUPIAH ATO NT, CONVERT KE RUPIAH DI MODAL, NT GA BERUBAH KE RUPIAH DI EXCEL
-
 async function load() {
     const changeDetail = document.querySelectorAll('.changeDetail');
     document.querySelector('.addTransaction').addEventListener('click', addPopup);
@@ -403,15 +401,16 @@ function saveDataPopup(action) {
                 createNewData.account = '-';
             }
             else {
-                createNewData.account = Number(accountInput);
-                if (Number.isNaN(createNewData.account) || !Number.isInteger(createNewData.account)) {
-                    Swal.fire({
+                createNewData.account = accountInput;
+
+				if (typeof Number(createNewData.account) !== 'number') {
+					Swal.fire({
 						icon: 'error',
 						title: 'ERROR',
 						text: 'Pastikan kolom nomor rekening berupa angka',
-                    });
-                    return;
-                }
+					});
+					return;
+				}
             }
 
             createNewData.type = transactionType;
